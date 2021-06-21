@@ -6,7 +6,6 @@ ARG INSTALL_DIR=${DEFAULT_INSTALL_DIR}
 
 # liboqs version
 # ATTENTION: Changing this could mean that further adaptions in sshd_config and ssh_config are required
-#ARG LIBOQS_RELEASE="0.6.0"
 ARG LIBOQS_RELEASE="main"
 
 # liboqs build defines (https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs)
@@ -106,11 +105,6 @@ RUN chown ${OQS_USER}:${OQS_USER} .
 # Pass some potentionally useful variables to environment
 ENV OQS_INSTALL_DIR=${INSTALL_DIR}
 ENV OQS_USER=$OQS_USER
-
-# Create privilege separation user
-#RUN mkdir -p /var/empty && groupadd sshd && useradd -g sshd -c 'sshd privsep' -d /var/empty -s /bin/false sshd
-#RUN mkdir -p /var/empty && addgroup sshd && useradd -g sshd -c 'sshd privsep' -d /var/empty -s /bin/false sshd
-#RUN mkdir -p /var/empty && adduser --ingroup sshd -D -s /bin/false sshd
 
 # Enable ssh deamon to start at boot (although `rc-service oqs-sshd start` still needs to be called)
 COPY oqs-sshd /etc/init.d/
